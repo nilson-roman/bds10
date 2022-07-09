@@ -63,13 +63,13 @@ const Form = () => {
     };
 
     requestBackend(config)
-    .then(() => {
-      toast.info('Funcionário cadastrado com sucesso');
-      history.push('/admin/employees');
-    })
-    .catch(() => {
-      toast.error('Erro ao cadastrar funcionário');
-    });
+      .then(() => {
+        toast.info('Cadastrado com sucesso');
+        history.push('/admin/employees');
+      })
+      .catch(() => {
+        toast.error('Erro ao cadastrar funcionário');
+      });
   };
 
   const handleCancel = () => {
@@ -86,14 +86,13 @@ const Form = () => {
             <div className="col employee-crud-inputs-left-container">
 
               <div className="margin-bottom-30">
-              <input
+                <input
                   {...register('name', {
                     required: 'Campo obrigatório',
                   })}
                   type="text"
-                  className={`form-control base-input ${
-                    errors.name ? 'is-invalid' : ''
-                  }`}
+                  className={`form-control base-input ${errors.name ? 'is-invalid' : ''
+                    }`}
                   placeholder="Nome do funcionário"
                   name="name"
                   data-testid="name"
@@ -104,20 +103,22 @@ const Form = () => {
               </div>
 
               <div className="margin-bottom-30">
-              <input
+                <input
                   {...register('email', {
                     required: 'Campo obrigatório',
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: 'Email inválido'
+                    }
                   })}
                   type="text"
-                  className={`form-control base-input ${
-                    errors.name ? 'is-invalid' : ''
-                  }`}
+                  className={`form-control base-input ${errors.email ? 'is-invalid' : ''}`}
                   placeholder="Email do funcionário"
                   name="email"
                   data-testid="email"
                 />
                 <div className="invalid-feedback d-block">
-                  {errors.name?.message}
+                  {errors.email?.message}
                 </div>
               </div>
 
@@ -137,6 +138,7 @@ const Form = () => {
                         String(department.id)
                       }
                       inputId="department"
+                      placeholder="Departamento"
                     />
                   )}
                 />

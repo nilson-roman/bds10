@@ -2,7 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Form from "../Form";
 import history from 'util/history';
-import { Router } from 'react-router-dom';
+import { Router, useParams } from 'react-router-dom';
 import { server } from "./fixtures";
 import selectEvent from "react-select-event";
 import { ToastContainer } from 'react-toastify';
@@ -11,7 +11,18 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useParams: jest.fn()
+}));
+
 describe('Employee form create tests', () => {
+
+    beforeEach(() => {
+        (useParams as jest.Mock).mockReturnValue({
+            employeeId: 'create'
+        })
+    });
 
     test('should show toast and redirect when submit form correctly', async () => {
 
