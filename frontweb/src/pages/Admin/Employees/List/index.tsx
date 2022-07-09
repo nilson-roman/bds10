@@ -37,7 +37,6 @@ const List = () => {
     };
 
     requestBackend(config).then((response) => {
-      console.log(response)
       setPage(response.data);
     });
   }, [controlComponentsData]);
